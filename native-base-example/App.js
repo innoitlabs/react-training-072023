@@ -10,18 +10,19 @@ import {
   Input,
   IconButton,
   Icon,
-  Checkbox
+  Checkbox,
+  Text
 } from "native-base";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Feather, Entypo } from "@expo/vector-icons";
 
 
 const initialState = {
+  text1: "",
   showDoneTasks: true,
   showAddTask: false,
   visibleTasks: [],
   tasks: [],
-  text:""
 };
 
 export default class App extends Component {
@@ -40,16 +41,18 @@ export default class App extends Component {
     this.setState({ visibleTasks });
     AsyncStorage.setItem("tasksState", JSON.stringify(this.state));
   };
+
   componentDidMount = async () => {
     const stateString = await AsyncStorage.getItem("tasksState");
     const state = JSON.parse(stateString) || initialState;
     this.setState(state, this.filterTasks);
   };
+  
   toggleTask = (taskId) => {
     const tasks = [...this.state.tasks];
     tasks.forEach((task) => {
       if (task.id === taskId) {
-        task.doneAt = task.doneAt ? null : new Date();
+        task.isCompleted = !task.isCompleted;
       }
     });
 
@@ -57,7 +60,7 @@ export default class App extends Component {
   };
 
   addTask = () => {
-    if (!this.state.text || !this.state.text.trim()) {
+    if (!this.state.text1 || !this.state.text1.trim()) {
       Alert.alert("Warning", "Please enter task");
       return;
     }
@@ -65,7 +68,7 @@ export default class App extends Component {
     const tasks = [...this.state.tasks];
     tasks.push({
       id: Math.random(),
-      desc: this.state.text,
+      desc: this.state.text1,
       isCompleted:false,
     });
 
@@ -80,9 +83,9 @@ export default class App extends Component {
   render() {
     return (
       <NativeBaseProvider>
-        <Center flex={1} px={3}>
+        <Center flex={1} px={2}>
           <Center w="100%">
-            <Box maxW="300" w="100%">
+            <Box maxW="350" w="100%">
               <Heading mb="2" size="md">
                 Tasks List
               </Heading>
@@ -91,8 +94,8 @@ export default class App extends Component {
                   <Input
                     flex="1"
                     placeholder="Add Task"
-                    onChange={(txt) => this.setState({ text: txt })}
-                    value={this.state.text}
+                    onChangeText={(text1) => this.setState({ text1 })}
+                    value={this.state.text1}
                   />
                   <IconButton
                     borderRadius="sm"
@@ -107,7 +110,7 @@ export default class App extends Component {
                     }
                     onPress={() => {
                       this.addTask();
-                      this.setState({ text: "" });
+                      this.setState({ text1: "" });
                     }}
                   />
                 </HStack>
@@ -120,10 +123,12 @@ export default class App extends Component {
                       key={task.id}
                     >
                       <Checkbox
-                        isChecked={item.isCompleted}
-                        onChange={() => handleStatusChange(task)}
+                        isChecked={task.isCompleted}
+                        onChange={() => this.toggleTask(task.id)}
                         value={task.desc}
-                      ></Checkbox>
+                      >
+                        { ""}
+                      </Checkbox>
                       <Text
                         width="100%"
                         flexShrink={1}
@@ -136,9 +141,9 @@ export default class App extends Component {
                         _dark={{
                           color: task.isCompleted ? "gray.400" : "coolGray.50",
                         }}
-                        onPress={() => handleStatusChange(task)}
+                        onPress={() => this.toggleTask(task.id)}
                       >
-                        {task.title}
+                        {task.desc}
                       </Text>
                       <IconButton
                         size="sm"
@@ -151,7 +156,7 @@ export default class App extends Component {
                             color="trueGray.400"
                           />
                         }
-                        onPress={() => handleDelete(task)}
+                        onPress={() => this.deleteTask(task.id)}
                       />
                     </HStack>
                   ))}

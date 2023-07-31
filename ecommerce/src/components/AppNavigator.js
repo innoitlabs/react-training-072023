@@ -5,6 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import Cart from '../screens/Cart'
 import Products from '../screens/Products'
 import MultipleReducers from '../screens/MultipleReducers'
+import WebVw from "../screens/WebView";
 
 const Drawer = createDrawerNavigator();
 
@@ -31,6 +32,7 @@ const AppNavigator = () => {
             headerTintColor: "white",
           }}
         />
+        <Drawer.Screen name="WebView" component={WebVw} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

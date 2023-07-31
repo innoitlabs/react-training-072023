@@ -1,29 +1,29 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { createStackNavigator } from '@react-navigation/stack'
-import { NavigationContainer } from '@react-navigation/native'
+import { createDrawerNavigator } from '@react-navigation/drawer'
+import { NavigationContainer } from "@react-navigation/native";
 import Cart from '../screens/Cart'
 import Products from '../screens/Products'
 import MultipleReducers from '../screens/MultipleReducers'
 
-const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
 const AppNavigator = () => {
     
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
+      <Drawer.Navigator initialRouteName="Products">
+        <Drawer.Screen
           name="Products"
           component={Products}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
+        <Drawer.Screen
           name="MultipleReducers"
           component={MultipleReducers}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
+        <Drawer.Screen
           name="Cart"
           component={Cart}
           options={{
@@ -31,7 +31,7 @@ const AppNavigator = () => {
             headerTintColor: "white",
           }}
         />
-      </Stack.Navigator>
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }

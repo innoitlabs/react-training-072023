@@ -61,7 +61,7 @@ const Products = ({ navigation }) => {
             }}
           >
             <TouchableOpacity
-              onPress={() => navigation.navigate("Cart")}
+              onPress={() => navigation.toggleDrawer()}
               style={{
                 alignItems: "center",
                 justifyContent: "center",
@@ -71,15 +71,7 @@ const Products = ({ navigation }) => {
                 borderRadius: 50,
               }}
             >
-              <Icon
-                name="shopping-cart"
-                size={23}
-                color={theme ? "#fff" : "#28282B"}
-              />
-              {/* <Text style={{ color: theme ? "#fff" : "#28282B", fontSize: 23 }}>
-                
-                Cart
-              </Text> */}
+              <Icon name="bars" size={23} color={theme ? "#fff" : "#28282B"} />
             </TouchableOpacity>
             <Text style={{ color: theme ? "#fff" : "#28282B", fontSize: 23 }}>
               Products

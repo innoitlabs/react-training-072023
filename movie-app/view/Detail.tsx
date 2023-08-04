@@ -5,7 +5,6 @@ import { MovieDetail, Search } from '../types/movieTypes';
 import { requestDB } from '../utils/request';
 import { ActivityIndicator, Card } from 'react-native-paper';
 
-
 type Props = NativeStackScreenProps<Search, 'Detail'>;
 
 function CardData({ title, content }: { title: string, content: string }){ 

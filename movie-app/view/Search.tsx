@@ -7,7 +7,6 @@ import { Search } from "../types/movieTypes";
 import { requestDB } from "../utils/request";
 import SearchItem from "../components/SearchItem";
 
-
 const SearchView = ({ navigation }: NativeStackScreenProps<any, 'Search'>) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -21,6 +20,7 @@ const SearchView = ({ navigation }: NativeStackScreenProps<any, 'Search'>) => {
                 page:1,
             }
         });
+      
         setResults(searchResult.Search);
         setLoading(false);
     }, 2000);

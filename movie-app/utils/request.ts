@@ -5,6 +5,7 @@ export const requestDB =async ({params}:{params:any}) => {
         ).toString()}`
         );
         const json = await response.json();
+        console.log(json);
         if (json.Error) {
             throw json.Error;
         }
@@ -13,6 +14,7 @@ export const requestDB =async ({params}:{params:any}) => {
         }
     }
     catch (error) { 
+        console.log(error);
         return error;
     }
 }
